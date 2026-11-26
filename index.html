@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>4회차 마스터 가이드: 내 웹앱의 '두뇌' 만들기 (강사 & 학생 통합)</title>
+  <title>4회차 · 내 웹앱의 두뇌 만들기 (학생용 친절 가이드)</title>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
   <style>
     :root {
@@ -23,144 +23,146 @@
     * { box-sizing: border-box; font-family: 'Noto Sans KR', sans-serif; }
     body { margin: 0; background: #fff; color: var(--dark); line-height: 1.65; }
 
-    /* Top Bar */
-    .top-bar {
+    /* Top Header */
+    header {
       background: #fff; border-bottom: 1px solid var(--border); padding: 14px 24px;
-      position: sticky; top: 0; z-index: 100; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+      position: sticky; top: 0; z-index: 100; display: flex; justify-content: space-between; align-items: center;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.04);
     }
     .brand { display: flex; align-items: center; gap: 8px; font-weight: 900; font-size: 1.05rem; }
     .dots span { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: 2px; }
-    .mode-toggle {
-      display: flex; align-items: center; gap: 8px; background: var(--surface); padding: 6px 14px; border-radius: 24px; border: 1px solid var(--border);
-    }
-    .mode-toggle label { font-size: 0.85rem; font-weight: 700; color: var(--dark); cursor: pointer; display: flex; align-items: center; gap: 6px; }
-    .mode-toggle input { width: 16px; height: 16px; accent-color: var(--blue); }
+    .time-pill { background: var(--blue-bg); color: var(--blue); font-weight: 700; font-size: 0.85rem; padding: 5px 14px; border-radius: 20px; }
 
-    /* Hero */
+    /* Hero Section */
     .hero {
       background: linear-gradient(135deg, #F4F8FE 0%, #FFFFFF 100%);
-      border-bottom: 1px solid var(--border); padding: 44px 20px 36px; text-align: center;
+      border-bottom: 1px solid var(--border); padding: 44px 20px 38px; text-align: center;
     }
-    .badge-pill {
-      display: inline-block; background: var(--blue-bg); color: var(--blue);
-      font-weight: 700; font-size: 0.85rem; padding: 6px 16px; border-radius: 20px; margin-bottom: 14px;
+    .hero-tag {
+      display: inline-block; background: #fff; border: 1px solid var(--blue); color: var(--blue);
+      font-weight: 700; font-size: 0.85rem; padding: 5px 14px; border-radius: 20px; margin-bottom: 14px;
     }
     .hero h1 { font-size: 2rem; font-weight: 900; margin: 0 0 12px; letter-spacing: -0.5px; }
-    .hero p { color: var(--gray); max-width: 740px; margin: 0 auto 24px; font-size: 1.02rem; }
+    .hero p { color: var(--gray); max-width: 720px; margin: 0 auto 28px; font-size: 1.02rem; }
 
-    /* Big Picture Flow */
-    .big-flow {
+    /* 4~7 Session Roadmap */
+    .roadmap {
       max-width: 960px; margin: 0 auto; display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; text-align: left;
     }
-    @media (max-width: 820px) { .big-flow { grid-template-columns: 1fr 1fr; } }
-    @media (max-width: 500px) { .big-flow { grid-template-columns: 1fr; } }
-    .bf-item {
-      background: #fff; border: 1px solid var(--border); border-radius: 12px; padding: 14px 16px; position: relative;
+    @media (max-width: 800px) { .roadmap { grid-template-columns: 1fr 1fr; } }
+    @media (max-width: 480px) { .roadmap { grid-template-columns: 1fr; } }
+    .rm-card {
+      background: #fff; border: 1px solid var(--border); border-radius: 12px; padding: 14px 16px;
     }
-    .bf-item.current { border: 2px solid var(--blue); background: #F8FAFF; }
-    .bf-step { font-size: 0.78rem; font-weight: 700; color: var(--blue); }
-    .bf-title { font-size: 0.98rem; font-weight: 700; margin: 2px 0 4px; }
-    .bf-desc { font-size: 0.82rem; color: var(--gray); margin: 0; }
+    .rm-card.active { border: 2px solid var(--blue); background: #F8FAFF; box-shadow: 0 4px 12px rgba(26,115,232,0.08); }
+    .rm-num { font-size: 0.78rem; font-weight: 700; color: var(--blue); }
+    .rm-title { font-size: 0.98rem; font-weight: 700; margin: 2px 0 4px; }
+    .rm-desc { font-size: 0.82rem; color: var(--gray); margin: 0; }
 
-    .container { max-width: 1020px; margin: 32px auto 90px; padding: 0 20px; }
+    .container { max-width: 980px; margin: 32px auto 90px; padding: 0 20px; }
 
-    /* Instructor Script Box */
-    .instructor-box {
-      background: #FFFDF5; border: 1.5px solid #F9AB00; border-radius: 12px; padding: 16px 20px; margin: 16px 0;
-      display: none;
+    /* Why Section (Accordion / Cards) */
+    .why-box {
+      background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 24px; margin-bottom: 32px;
     }
-    body.show-instructor .instructor-box { display: block; }
-    .inst-header { font-weight: 900; color: #B06000; font-size: 0.9rem; margin-bottom: 8px; display: flex; align-items: center; gap: 6px; }
-    .inst-ment { background: #fff; border-left: 4px solid #F9AB00; padding: 10px 14px; border-radius: 6px; font-size: 0.9rem; margin-bottom: 8px; color: #3C4043; }
-    .inst-tip { font-size: 0.86rem; color: #5F6368; margin: 0; }
-
-    /* Step Navigation */
-    .step-nav {
-      display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; margin-bottom: 28px;
+    .why-title { font-size: 1.2rem; font-weight: 900; margin: 0 0 16px; display: flex; align-items: center; gap: 8px; }
+    .why-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+    @media (max-width: 768px) { .why-grid { grid-template-columns: 1fr; } }
+    .why-item {
+      background: #fff; border: 1px solid var(--border); border-radius: 12px; padding: 18px;
     }
-    @media (max-width: 768px) { .step-nav { grid-template-columns: 1fr 1fr; } }
-    .s-btn {
-      padding: 14px 12px; border: 1px solid var(--border); border-radius: 12px; background: #fff;
-      cursor: pointer; text-align: left; transition: all 0.2s;
-    }
-    .s-btn:hover { border-color: var(--blue); }
-    .s-btn.active { background: var(--dark); color: #fff; border-color: var(--dark); }
-    .s-btn .time { font-size: 0.78rem; font-weight: 700; opacity: 0.8; display: block; }
-    .s-btn .name { font-size: 0.92rem; font-weight: 700; display: block; margin-top: 2px; }
+    .why-q { font-weight: 700; font-size: 0.95rem; color: var(--blue); margin: 0 0 8px; }
+    .why-a { font-size: 0.88rem; color: var(--dark); margin: 0; }
 
-    .panel { display: none; animation: fadeIn 0.25s ease; }
-    .panel.active { display: block; }
+    /* Step Tabs matching Worksheet 1~4칸 */
+    .tab-bar {
+      display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; margin-bottom: 24px;
+    }
+    @media (max-width: 768px) { .tab-bar { grid-template-columns: 1fr 1fr; } }
+    .t-btn {
+      background: #fff; border: 1.5px solid var(--border); border-radius: 12px; padding: 14px 12px;
+      text-align: left; cursor: pointer; transition: all 0.2s;
+    }
+    .t-btn:hover { border-color: var(--blue); }
+    .t-btn.active { background: var(--dark); color: #fff; border-color: var(--dark); }
+    .t-btn .t-badge { font-size: 0.78rem; font-weight: 700; opacity: 0.85; display: block; }
+    .t-btn .t-name { font-size: 0.92rem; font-weight: 700; display: block; margin-top: 2px; }
+
+    .step-panel { display: none; animation: fadeIn 0.25s ease; }
+    .step-panel.active { display: block; }
     @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
 
     .card {
-      border: 1px solid var(--border); border-radius: 16px; padding: 26px; margin-bottom: 24px; background: #fff;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.03);
+      background: #fff; border: 1px solid var(--border); border-radius: 16px; padding: 28px; margin-bottom: 24px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.03);
     }
-    .card-title { font-size: 1.32rem; font-weight: 900; margin: 0 0 8px; display: flex; align-items: center; gap: 10px; }
-    .card-sub { color: var(--gray); font-size: 0.95rem; margin: 0 0 20px; }
+    .card-head { display: flex; align-items: center; gap: 12px; margin-bottom: 8px; }
+    .step-pill {
+      background: var(--blue); color: #fff; font-weight: 900; font-size: 0.88rem; padding: 4px 12px; border-radius: 8px;
+    }
+    .card-head h2 { margin: 0; font-size: 1.35rem; font-weight: 900; }
+    .card-intro { color: var(--gray); font-size: 0.96rem; margin: 0 0 22px; }
 
-    .num-badge {
-      width: 28px; height: 28px; border-radius: 50%; background: var(--blue); color: #fff;
-      display: inline-flex; align-items: center; justify-content: center; font-size: 0.9rem; font-weight: 700; flex-shrink: 0;
+    /* Field Guide Blocks */
+    .field-guide {
+      border: 1px solid var(--border); border-radius: 12px; padding: 18px 20px; margin-bottom: 14px; background: #fff;
+    }
+    .fg-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; flex-wrap: wrap; gap: 6px; }
+    .fg-label { font-weight: 700; font-size: 1rem; color: var(--dark); }
+    .fg-tag { font-size: 0.78rem; font-weight: 700; padding: 3px 10px; border-radius: 6px; background: var(--surface); color: var(--gray); border: 1px solid var(--border); }
+    .fg-desc { font-size: 0.9rem; color: var(--gray); margin: 0 0 10px; }
+    .fg-example {
+      background: var(--surface); border-left: 3px solid var(--blue); padding: 10px 14px; border-radius: 6px;
+      font-size: 0.88rem; color: var(--dark);
     }
 
-    /* Action Steps inside Card */
-    .action-list { display: flex; flex-direction: column; gap: 12px; }
-    .action-item {
-      display: flex; gap: 14px; background: var(--surface); border: 1px solid var(--border);
-      border-radius: 12px; padding: 16px; align-items: flex-start;
-    }
-    .a-num {
-      background: #fff; border: 1.5px solid var(--blue); color: var(--blue); font-weight: 900;
-      padding: 2px 10px; border-radius: 8px; font-size: 0.85rem; flex-shrink: 0;
-    }
-    .a-body h4 { margin: 0 0 4px; font-size: 1rem; }
-    .a-body p { margin: 0; font-size: 0.9rem; color: var(--gray); }
-
-    /* Grids */
-    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-    .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    /* Tool Tips Grid */
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 12px; }
+    .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 12px; }
     @media (max-width: 768px) { .grid-2, .grid-3 { grid-template-columns: 1fr; } }
 
-    .sub-box { border: 1px solid var(--border); border-radius: 12px; padding: 18px; background: #fff; }
-    .sub-box h4 { margin: 0 0 8px; font-size: 1rem; color: var(--blue); }
+    .mini-box { border: 1px solid var(--border); border-radius: 10px; padding: 14px 16px; background: #fff; }
+    .mini-box h4 { margin: 0 0 6px; font-size: 0.95rem; color: var(--blue); }
+    .mini-box ul { margin: 0; padding-left: 18px; font-size: 0.86rem; color: var(--dark); }
 
-    .tag { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 0.78rem; font-weight: 700; }
-    .tag-f { background: var(--green-bg); color: var(--green); }
-    .tag-m { background: var(--yellow-bg); color: #B06000; }
-    .tag-w { background: var(--red-bg); color: var(--red); }
+    /* Copy Box */
+    .copy-card {
+      background: #F8FAFF; border: 1.5px solid var(--blue); border-radius: 10px; padding: 14px 16px; margin-top: 10px;
+    }
+    .copy-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
+    .copy-title { font-size: 0.85rem; font-weight: 700; color: var(--blue); }
+    .btn-copy {
+      background: var(--blue); color: #fff; border: none; padding: 5px 12px; border-radius: 6px;
+      font-size: 0.8rem; font-weight: 700; cursor: pointer;
+    }
+    .btn-copy:hover { background: #1557B0; }
+    .copy-pre { margin: 0; font-size: 0.88rem; white-space: pre-wrap; color: var(--dark); line-height: 1.5; }
 
-    /* Interactive Checklist */
-    .check-row {
-      display: flex; align-items: center; gap: 10px; padding: 12px 14px; border: 1px solid var(--border);
-      border-radius: 10px; margin-bottom: 8px; cursor: pointer; font-size: 0.92rem;
+    /* Checklist */
+    .chk-item {
+      display: flex; align-items: center; gap: 10px; padding: 10px 14px; border: 1px solid var(--border);
+      border-radius: 8px; margin-bottom: 6px; cursor: pointer; font-size: 0.88rem; background: #fff;
     }
-    .check-row input { width: 18px; height: 18px; accent-color: var(--red); }
-    .check-row.checked { background: var(--red-bg); border-color: var(--red); text-decoration: line-through; color: var(--red); }
-
-    /* Copyable Prompt Box */
-    .prompt-card {
-      background: #F8FAFF; border: 1.5px solid var(--blue); border-radius: 12px; padding: 16px; margin-top: 12px;
-    }
-    .prompt-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
-    .prompt-label { font-weight: 700; font-size: 0.88rem; color: var(--blue); }
-    .copy-btn {
-      background: var(--blue); color: #fff; border: none; padding: 6px 12px; border-radius: 6px;
-      font-size: 0.82rem; font-weight: 700; cursor: pointer;
-    }
-    .copy-btn:hover { background: #1557B0; }
-    .prompt-text { margin: 0; font-size: 0.9rem; color: var(--dark); white-space: pre-wrap; line-height: 1.55; }
+    .chk-item input { width: 16px; height: 16px; accent-color: var(--red); }
+    .chk-item.done { background: var(--red-bg); border-color: var(--red); text-decoration: line-through; color: var(--red); }
 
     /* Guardrail Visual */
-    .guard-grid { display: grid; grid-template-columns: 1fr 1.2fr 1fr; gap: 14px; margin-top: 14px; }
-    @media (max-width: 768px) { .guard-grid { grid-template-columns: 1fr; } }
-    .g-col { border-radius: 12px; padding: 18px; }
-    .g-ok { background: var(--green-bg); border: 2px solid var(--green); }
-    .g-mid { background: var(--yellow-bg); border: 2px dashed var(--yellow); text-align: center; }
-    .g-no { background: var(--red-bg); border: 2px solid var(--red); }
+    .guard-visual { display: grid; grid-template-columns: 1fr 1.1fr 1fr; gap: 12px; margin-top: 16px; }
+    @media (max-width: 768px) { .guard-visual { grid-template-columns: 1fr; } }
+    .gv-box { border-radius: 12px; padding: 16px; }
+    .gv-allow { background: var(--green-bg); border: 2px solid var(--green); }
+    .gv-wall { background: var(--yellow-bg); border: 2px dashed var(--yellow); text-align: center; }
+    .gv-block { background: var(--red-bg); border: 2px solid var(--red); }
 
-    /* Toast */
+    /* Interactive Mode Preview */
+    .mode-switch { display: flex; gap: 8px; margin-top: 10px; }
+    .m-btn {
+      padding: 8px 14px; border-radius: 8px; border: 1px solid var(--border); background: #fff;
+      font-size: 0.85rem; font-weight: 700; cursor: pointer;
+    }
+    .m-btn.active { background: var(--blue); color: #fff; border-color: var(--blue); }
+    .mode-desc { margin-top: 10px; padding: 12px 14px; border-radius: 8px; background: var(--blue-bg); font-size: 0.88rem; color: var(--dark); }
+
     .toast {
       position: fixed; bottom: 24px; right: 24px; background: var(--dark); color: #fff;
       padding: 12px 20px; border-radius: 8px; font-size: 0.9rem; opacity: 0; transition: opacity 0.3s; pointer-events: none; z-index: 200;
@@ -168,9 +170,9 @@
     .toast.show { opacity: 1; }
   </style>
 </head>
-<body class="show-instructor">
+<body>
 
-<div class="top-bar">
+<header>
   <div class="brand">
     <div class="dots">
       <span style="background:var(--blue)"></span>
@@ -178,285 +180,322 @@
       <span style="background:var(--yellow)"></span>
       <span style="background:var(--green)"></span>
     </div>
-    <span>인문대학 웹앱 메이커 · 4회차 마스터 가이드</span>
+    <span>인문대학 웹앱 메이커 · 4회차 실습 가이드</span>
   </div>
-  <div class="mode-toggle">
-    <label>
-      <input type="checkbox" id="instToggle" checked onchange="toggleInstructor()">
-      강사용 진행 대본·체크포인트 표시
-    </label>
-  </div>
-</div>
+  <div class="time-pill">4회차 · 100분 완성</div>
+</header>
 
 <div class="hero">
-  <span class="badge-pill">4~7회차 전체 큰 그림 중 1단계 (100분 수업)</span>
-  <h1>오늘 4회차는 왜 하고, 최종 웹앱과 어떻게 연결되나요?</h1>
-  <p>웹앱을 만들기 전에 내 AI가 <b>거짓말(환각)을 하지 않도록 전공 근거 자료로 검증</b>하고, <b>허용/거절 규칙(가드레일)</b>을 세워 나만의 <b>Gemini Skill(두뇌 프로토타입)</b>을 완성하는 날입니다.</p>
+  <span class="hero-tag">워크시트 1칸 ~ 4칸 1:1 맞춤형 가이드</span>
+  <h1>내 웹앱이 헛소리하지 않게 만드는 날</h1>
+  <p>지난 시간까지 웹앱의 껍데기를 맛보았다면, 오늘은 웹앱 속에 들어갈 똑똑하고 믿을 수 있는 <b>'두뇌'</b>를 만듭니다.<br/>워크시트 1칸부터 4칸까지 순서대로 따라오면 오늘 수업이 끝납니다.</p>
 
-  <div class="big-flow">
-    <div class="bf-item current">
-      <div class="bf-step">4회차 (오늘 · 두뇌 설계)</div>
-      <div class="bf-title">근거 검증 & Skill 조련</div>
-      <p class="bf-desc">Notebook으로 자료 팩트체크 → 가드레일 설정 → @Skill로 대화 로직 리허설</p>
+  <div class="roadmap">
+    <div class="rm-card active">
+      <div class="rm-num">4회차 (오늘 · 두뇌 만들기)</div>
+      <div class="rm-title">근거 검증 & Skill 훈련</div>
+      <p class="rm-desc">자료로 AI 검증하기 → 안 되는 질문 선 긋기 → 나만의 AI 조교(Skill) 완성</p>
     </div>
-    <div class="bf-item">
-      <div class="bf-step">5회차 (화면 & 로그인)</div>
-      <div class="bf-title">AI Studio 앱 빌드</div>
-      <p class="bf-desc">오늘 만든 Skill 지시문을 AI Studio에 이식하고 로그인·버튼 화면 생성</p>
+    <div class="rm-card">
+      <div class="rm-num">5회차 (다음 주 · 화면 만들기)</div>
+      <div class="rm-title">AI Studio 앱 빌드</div>
+      <p class="rm-desc">오늘 만든 AI 두뇌에 로그인과 버튼이 달린 웹사이트 옷 입히기</p>
     </div>
-    <div class="bf-item">
-      <div class="bf-step">6회차 (오류 수정)</div>
-      <div class="bf-title">PRD 고도화 & 클리닉</div>
-      <p class="bf-desc">AI가 빠뜨리거나 지어내는 오해 지점을 찾아 설계서(v2)로 정밀 수정</p>
+    <div class="rm-card">
+      <div class="rm-num">6회차 (고도화 · 고장 고치기)</div>
+      <div class="rm-title">PRD 고도화 & 클리닉</div>
+      <p class="rm-desc">AI가 엉뚱하게 답하는 부분을 찾아내서 더 똑똑하게 수정하기</p>
     </div>
-    <div class="bf-item">
-      <div class="bf-step">7회차 (완성 & 발표)</div>
-      <div class="bf-title">최종 배포 & 쇼케이스</div>
-      <p class="bf-desc">웹앱 최종 배포 후 90초 시연(정상 작동 사례 1개 + 가드레일 방어 사례 1개)</p>
+    <div class="rm-card">
+      <div class="rm-num">7회차 (발표 · 완성품 공개)</div>
+      <div class="rm-title">최종 배포 & 90초 시연</div>
+      <p class="rm-desc">내 웹앱 최종 배포하고 90초 동안 친구들에게 시연하기</p>
     </div>
   </div>
 </div>
 
 <div class="container">
 
-  <!-- 5단계 시간표 네비게이션 -->
-  <div class="step-nav">
-    <button class="s-btn active" onclick="openStep(0, this)">
-      <span class="time">00 ~ 10분 (10분)</span>
-      <span class="name">0. 도입 & 환각 시연</span>
-    </button>
-    <button class="s-btn" onclick="openStep(1, this)">
-      <span class="time">10 ~ 25분 (15분)</span>
-      <span class="name">1. 자료 확보 & 지도</span>
-    </button>
-    <button class="s-btn" onclick="openStep(2, this)">
-      <span class="time">25 ~ 55분 (30분)</span>
-      <span class="name">2. Notebook 원문 대조</span>
-    </button>
-    <button class="s-btn" onclick="openStep(3, this)">
-      <span class="time">55 ~ 70분 (15분)</span>
-      <span class="name">3. AI 가드레일 카드</span>
-    </button>
-    <button class="s-btn" onclick="openStep(4, this)">
-      <span class="time">70 ~ 100분 (30분)</span>
-      <span class="name">4. Skill 조련 & 제출</span>
-    </button>
-  </div>
-
-  <!-- STEP 0 -->
-  <div class="panel active" id="step-0">
-    <div class="card">
-      <h2 class="card-title"><span class="num-badge">0</span> 수업 열기: 일반 AI의 거짓말 시연 & 오늘의 목표 공유 (10분)</h2>
-      <p class="card-sub">학생들이 빈손으로 왔더라도 당황하지 않고 바로 따라올 수 있도록 세팅하고, 왜 '근거 자료'가 필요한지 눈으로 확인합니다.</p>
-
-      <div class="instructor-box">
-        <div class="inst-header">강사 진행 대본 & 화면 조작 가이드</div>
-        <div class="inst-ment">
-          "지난 시간까지 웹앱의 뼈대를 맛보았다면, 오늘은 여러분의 앱에 들어갈 '두뇌'를 만드는 날입니다. 일반 Gemini에게 우리 학과 졸업요건이나 방언 기준을 물으면 그럴듯하게 거짓말을 지어냅니다. 여러분이 만든 앱이 이런 헛소리를 하면 아무도 쓰지 않겠죠? 오늘 우리가 고른 자료만 보고 정확히 답하는 AI를 조련해 보겠습니다."
-        </div>
-        <p class="inst-tip">• <b>사전 세팅 확인:</b> 학생 전원 교육용 AI Pro 계정 로그인 → 워크시트 웹앱(4회차 탭) 열기 → 강사 구글 드라이브 '4회차 스타터 자료실' 폴더 공유.</p>
+  <!-- 왜 이 활동을 하나요? -->
+  <div class="why-box">
+    <h2 class="why-title">시작 전 3분 체크: 왜 이런 활동을 하나요?</h2>
+    <div class="why-grid">
+      <div class="why-item">
+        <p class="why-q">1. 그냥 Gemini에게 물으면 되는데 왜 자료를 찾나요?</p>
+        <p class="why-a">일반 AI는 모르는 걸 물어보면 모른다고 하지 않고 그럴듯한 거짓말(환각)을 지어냅니다. 여러분의 앱이 거짓말을 하면 아무도 안 쓰겠죠? 그래서 <b>내가 직접 고른 믿을 수 있는 자료</b>만 보고 답하게 만드는 것입니다.</p>
       </div>
-
-      <div class="action-list">
-        <div class="action-item">
-          <span class="a-num">학생 행동 1</span>
-          <div class="a-body">
-            <h4>내 웹앱의 AI 활용 유형 선택하기 (워크시트 STEP 1)</h4>
-            <p><b>유형 A (AI 응답형):</b> 사용자 질문에 AI가 자료를 근거로 실시간 답변하는 앱 (예: 학사 규정 챗봇, 사투리 번역기)<br/>
-            <b>유형 B (아카이브·기록형):</b> AI 응답 기능 없이 검증된 정보를 정리해 보여주는 앱 → 이 경우 오늘 만드는 Skill은 5~6회차 코딩을 도와주는 <b>'전담 기획·개발 조교'</b>로 활용합니다.</p>
-          </div>
-        </div>
-        <div class="action-item">
-          <span class="a-num">학생 행동 2</span>
-          <div class="a-body">
-            <h4>강사 시연 관찰: 그냥 Gemini vs 자료를 읽은 Gemini</h4>
-            <p>출처 번호 없이 기억으로만 대답하는 일반 Gemini와, 답변 옆에 원문 위치 번호가 붙는 <b>Gemini Notebook</b>의 차이를 비교합니다.</p>
-          </div>
-        </div>
+      <div class="why-item">
+        <p class="why-q">2. 'AI 가드레일 카드'는 왜 적어야 하나요?</p>
+        <p class="why-a">학사 안내 앱에 대고 '학자금 대출 금리 알려줘'처럼 엉뚱한 질문을 하는 사용자가 꼭 있습니다. 이때 앱이 망가지지 않도록 <b>"이 선을 넘는 질문은 정중히 거절해!"</b>라고 안전선을 그어두는 작업입니다. 다음 주 앱의 오류 방지 기능으로 그대로 들어갑니다.</p>
+      </div>
+      <div class="why-item">
+        <p class="why-q">3. 오늘 만드는 'Gemini Skill'은 어떻게 쓰이나요?</p>
+        <p class="why-a">처음부터 웹사이트 코드로 만들면 수정하기가 어렵습니다. 오늘 먼저 채팅창에서 <b>@내앱이름</b>을 불러 대화하며 <b>우리 앱의 두뇌가 제대로 작동하는지 리허설</b>을 해봅니다. 합격한 지시문이 다음 주 AI Studio 앱의 핵심 엔진이 됩니다.</p>
       </div>
     </div>
   </div>
 
-  <!-- STEP 1 -->
-  <div class="panel" id="step-1">
+  <!-- 워크시트 1~4칸 탭 -->
+  <div class="tab-bar">
+    <button class="t-btn active" onclick="showTab(0, this)">
+      <span class="t-badge">워크시트 1칸 · 20분</span>
+      <span class="t-name">미션 브리프 & 자료 지도</span>
+    </button>
+    <button class="t-btn" onclick="showTab(1, this)">
+      <span class="t-badge">워크시트 2칸 · 30분</span>
+      <span class="t-name">Notebook 원문 대조표</span>
+    </button>
+    <button class="t-btn" onclick="showTab(2, this)">
+      <span class="t-badge">워크시트 3칸 · 15분</span>
+      <span class="t-name">AI 가드레일 카드</span>
+    </button>
+    <button class="t-btn" onclick="showTab(3, this)">
+      <span class="t-badge">워크시트 4칸 · 25분</span>
+      <span class="t-name">Gemini Skill 5요소</span>
+    </button>
+    <button class="t-btn" onclick="showTab(4, this)">
+      <span class="t-badge">마무리 · 10분</span>
+      <span class="t-name">구글 문서 변환 & 제출</span>
+    </button>
+  </div>
+
+  <!-- 1칸 -->
+  <div class="step-panel active" id="tab-0">
     <div class="card">
-      <h2 class="card-title"><span class="num-badge">1</span> 전공 근거 자료 확보 & 자료 지도 3칸 분류 (15분)</h2>
-      <p class="card-sub">자료가 전혀 없는 학생은 강사가 제공한 '스타터 PDF'를 내려받고, 주제가 정해진 학생은 학술 검색 도구를 활용합니다.</p>
+      <div class="card-head">
+        <span class="step-pill">워크시트 1칸</span>
+        <h2>미션 브리프 & 자료 지도 채우기 (4개 항목)</h2>
+      </div>
+      <p class="card-intro">자료가 하나도 없어도 괜찮습니다. 워크시트 맨 위 4개 칸을 아래 순서대로 채워보세요.</p>
 
-      <div class="instructor-box">
-        <div class="inst-header">강사 진행 대본 & 운영 팁</div>
-        <div class="inst-ment">
-          "자료가 없어도 걱정하지 마세요. 공유해 드린 드라이브 폴더에 바로 쓸 수 있는 스타터 PDF 4종을 넣어두었습니다. 내 아이디어와 가장 비슷한 파일 1개를 받으시고, 학술 논문을 찾고 싶은 분은 지금부터 딱 10분간 Scholar와 RISS에서 3건만 찾아보세요."
+      <div class="field-guide">
+        <div class="fg-top">
+          <span class="fg-label">① 내 웹앱의 한 줄 목표와 주 사용자</span>
+          <span class="fg-tag">한 줄 입력</span>
         </div>
-        <p class="inst-tip">• <b>시간 엄수 팁:</b> 자료 검색에 15분 이상 쓰지 않도록 타이머를 띄워주세요. 3건만 확보하면 즉시 분류로 넘어갑니다.</p>
+        <p class="fg-desc">내가 만들 웹앱이 누구에게 어떤 도움을 주는지 한 줄로 적습니다.</p>
+        <div class="fg-example">예: 인문대 신입생을 위한 전공별 졸업요건 및 추천 교양 안내 웹앱</div>
       </div>
 
-      <div class="grid-2" style="margin-bottom:20px;">
-        <div class="sub-box">
-          <h4>Google Scholar 활용 3단계 (scholar.google.com)</h4>
-          <ul style="margin:0; padding-left:18px; font-size:0.9rem;">
-            <li><b>1. 도서관 연결:</b> 좌측 메뉴 → 설정 → 라이브러리 링크에서 소속 대학 도서관을 체크·저장합니다.</li>
-            <li><b>2. [PDF] 필터:</b> 검색 결과 오른쪽에 <b>[PDF]</b> 표시가 있는 논문부터 열어 바로 저장합니다.</li>
-            <li><b>3. APA 출처 복사:</b> 논문 아래 <b>'인용'</b> 버튼을 눌러 APA 형식을 복사해 워크시트에 붙여넣습니다.</li>
-          </ul>
+      <div class="field-guide">
+        <div class="fg-top">
+          <span class="fg-label">② 내 웹앱의 AI 활용 방식 선택</span>
+          <span class="fg-tag">드롭다운 선택</span>
         </div>
-        <div class="sub-box">
-          <h4>RISS 학술연구정보서비스 활용법 (riss.kr)</h4>
-          <ul style="margin:0; padding-left:18px; font-size:0.9rem;">
-            <li><b>1. 학교 도서관 경유:</b> 일반 검색창이 아닌 <b>학교 도서관 홈페이지 → RISS 바로가기</b>로 접속해야 기관 인증이 되어 유료 논문도 무료로 열립니다.</li>
-            <li><b>2. 원문 아이콘 확인:</b> <span class="tag tag-f">F 무료</span> <span class="tag tag-m">M 기관 내 무료</span> <span class="tag tag-w">W 유료</span></li>
-          </ul>
+        <p class="fg-desc">내 아이디어에 맞는 방식을 고르세요. 버튼을 눌러 차이를 확인해 보세요.</p>
+        <div class="mode-switch">
+          <button class="m-btn active" id="mBtn1" onclick="setMode(1)">AI 생성·분석형 선택 시</button>
+          <button class="m-btn" id="mBtn2" onclick="setMode(2)">데이터 기록·아카이브형 선택 시</button>
+        </div>
+        <div class="mode-desc" id="modeDesc">
+          <b>AI 생성·분석형:</b> 사용자 질문에 AI가 자료를 보고 실시간으로 대답해 주는 앱입니다. (예: 전공 튜터, 사투리 변환기) → 오늘 만드는 Skill이 내 앱의 실제 두뇌가 됩니다.
         </div>
       </div>
 
-      <div class="sub-box" style="background:var(--surface);">
-        <h4>워크시트 '자료 지도 3칸' 작성 & 제외 체크리스트 (클릭해서 확인)</h4>
-        <p style="font-size:0.88rem; color:var(--gray); margin-bottom:12px;">아무 자료나 30개 넣는 것보다 검증된 핵심 자료 3~8개가 훨씬 정확합니다. 아래 항목에 해당하면 반드시 <b>[제외 자료]</b>로 뺍니다.</p>
-        <label class="check-row" onclick="toggleCheck(this)"><input type="checkbox"> 친구·가족의 이름, 연락처, 학번 등 개인정보가 들어 있는 문서</label>
-        <label class="check-row" onclick="toggleCheck(this)"><input type="checkbox"> 시중 전공 서적 한 권 전체를 통째로 스캔한 파일 (필요한 장/쪽만 발췌)</label>
-        <label class="check-row" onclick="toggleCheck(this)"><input type="checkbox"> 유료 결제 논문을 타인에게 공유할 목적으로 업로드하는 경우</label>
-        <label class="check-row" onclick="toggleCheck(this)"><input type="checkbox"> 출처와 작성 연도를 알 수 없는 인터넷 캡처 이미지</label>
+      <div class="field-guide">
+        <div class="fg-top">
+          <span class="fg-label">③ 핵심 자료 (내 AI가 꼭 따라야 할 기준표·PDF·논문 + APA 출처)</span>
+          <span class="fg-tag">필수 자료 확보</span>
+        </div>
+        <p class="fg-desc">강사님이 공유한 구글 드라이브 <b>'4회차 스타터 자료실'</b>에서 PDF 1개를 다운로드하거나, 아래 방법으로 논문을 찾아 출처와 함께 적습니다.</p>
+        <div class="grid-2">
+          <div class="mini-box">
+            <h4>Google Scholar (scholar.google.com)</h4>
+            <ul>
+              <li>좌측 메뉴 → 설정 → 라이브러리 링크에서 우리 학교 도서관 체크</li>
+              <li>검색 결과 오른쪽에 <b>[PDF]</b>가 붙은 논문 우선 다운로드</li>
+              <li>논문 아래 <b>'인용'</b> 버튼 → APA 형식 복사 후 워크시트에 붙여넣기</li>
+            </ul>
+          </div>
+          <div class="mini-box">
+            <h4>RISS 학술연구정보서비스 (riss.kr)</h4>
+            <ul>
+              <li>반드시 <b>학교 도서관 홈페이지 → RISS 바로가기</b>로 경유 접속 (기관 인증)</li>
+              <li>원문보기 아이콘 확인: <b>F(무료)</b>, <b>M(기관 내 무료)</b>, W(유료)</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="field-guide">
+        <div class="fg-top">
+          <span class="fg-label">④ 보조 자료 및 제외 자료 (참고 기사 및 저작권·개인정보로 제외한 자료)</span>
+          <span class="fg-tag">필터링 체크</span>
+        </div>
+        <p class="fg-desc">참고만 할 기사 링크는 '보조'로 적고, 아래 항목에 해당하는 자료는 '제외' 칸에 적으며 노트북에 넣지 않습니다. (클릭해서 점검)</p>
+        <label class="chk-item" onclick="toggleChk(this)"><input type="checkbox"> 친구·가족의 이름, 연락처, 학번 등 개인정보가 포함된 파일</label>
+        <label class="chk-item" onclick="toggleChk(this)"><input type="checkbox"> 시중 전공 서적 한 권 전체를 통째로 스캔한 파일</label>
+        <label class="chk-item" onclick="toggleChk(this)"><input type="checkbox"> 출처나 작성 연도를 전혀 알 수 없는 인터넷 캡처 이미지</label>
       </div>
     </div>
   </div>
 
-  <!-- STEP 2 -->
-  <div class="panel" id="step-2">
+  <!-- 2칸 -->
+  <div class="step-panel" id="tab-1">
     <div class="card">
-      <h2 class="card-title"><span class="num-badge">2</span> Gemini Notebook 구축 & 질문 5개 원문 대조 (30분)</h2>
-      <p class="card-sub">내 자료를 읽은 AI가 실제로 정확하게 답하는지, 아니면 내용을 왜곡하는지 원문 번호를 눌러 직접 팩트체크합니다.</p>
-
-      <div class="instructor-box">
-        <div class="inst-header">강사 진행 대본 & 주의사항</div>
-        <div class="inst-ment">
-          "2026년 7월부터 기존 NotebookLM이 'Gemini Notebook'으로 이름이 바뀌었습니다. Gemini 앱 왼쪽 메뉴의 '노트북'을 누르셔도 똑같이 열립니다. 이제 자료를 넣고 질문 5개를 던질 텐데, 특히 4번 질문('이 자료들로 답할 수 없는 질문은 뭐야?')을 꼭 물어보세요. AI가 스스로 밝힌 한계가 다음 단계의 핵심 재료가 됩니다."
-        </div>
-        <p class="inst-tip">• <b>오류 체크:</b> 소스 목록에 느낌표(i) 아이콘이 뜬 자료는 가져오기 실패(유료 기사 차단 등)이므로 마우스를 올려 이유를 확인하고 삭제 후 다른 자료로 교체하게 안내합니다.</p>
+      <div class="card-head">
+        <span class="step-pill">워크시트 2칸</span>
+        <h2>Gemini Notebook 원문 대조표 채우기 (3개 항목)</h2>
       </div>
+      <p class="card-intro"><code>notebook.google.com</code> (또는 Gemini 앱 좌측 메뉴 '노트북')에 접속해 '새 노트북'을 만들고 PDF를 올린 뒤, 아래 3가지 질문을 차례로 던져 팩트체크합니다.</p>
 
-      <div class="action-list" style="margin-bottom:20px;">
-        <div class="action-item">
-          <span class="a-num">실습 A</span>
-          <div class="a-body">
-            <h4>노트북 생성 및 자료 업로드 (10분)</h4>
-            <p><code>notebook.google.com</code> 접속 → '새 노트북' 클릭 → Drive, PDF 파일, 웹사이트 URL, 또는 '웹에서 새 소스 검색'을 통해 핵심 자료 투입 → 상단 '메모 만들기'에 이 노트북을 누가 쓸지 한 줄 설명 기록.</p>
-          </div>
+      <div class="field-guide">
+        <div class="fg-top">
+          <span class="fg-label">① 검증 1 (핵심 개념 질문 → 답 요약 → 원문 번호 대조 판정)</span>
+          <span class="fg-tag">팩트체크 1</span>
         </div>
-        <div class="action-item">
-          <span class="a-num">실습 B</span>
-          <div class="a-body">
-            <h4>필수 질문 5개 던지기 (10분)</h4>
-            <p>아래 질문을 복사해 내 주제에 맞게 괄호만 바꾸어 질문하고, 답변 옆 <b>동그라미 번호</b>를 클릭해 왼쪽 원문 하이라이트와 대조합니다.</p>
-            <div class="prompt-card">
-              <div class="prompt-top">
-                <span class="prompt-label">Gemini Notebook 검증용 질문 5종 세트</span>
-                <button class="copy-btn" onclick="copyText('nbPrompts')">질문 5개 복사</button>
-              </div>
-              <pre class="prompt-text" id="nbPrompts">1. [핵심 개념]을 대학 1학년이 이해하기 쉽게 핵심만 설명해 줘.
-2. [자료 A]와 [자료 B]에서 서로 다르게 설명하거나 강조하는 기준은 무엇이야?
-3. 실제 사용자가 [특정 상황]에 처했을 때 무엇을 가장 먼저 확인해야 해?
-4. 이 자료들만으로는 절대 답할 수 없는 질문은 무엇이야? (자료의 한계 범위 알려줘)
-5. 내 웹앱에서 사용할 핵심 판단 기준을 자료에서 찾아 표로 정리해 줘.</pre>
-            </div>
+        <div class="copy-card">
+          <div class="copy-top">
+            <span class="copy-title">복사해서 노트북에 물어볼 질문 1</span>
+            <button class="btn-copy" onclick="copyOne('q1')">질문 복사</button>
           </div>
+          <pre class="copy-pre" id="q1">이 자료의 가장 핵심적인 개념과 기준을 대학교 1학년이 이해하기 쉽게 요약해 줘.</pre>
         </div>
       </div>
 
-      <h4 style="margin:0 0 10px;">원문 대조 3단계 판정 기준 (워크시트 STEP 2 기록)</h4>
+      <div class="field-guide">
+        <div class="fg-top">
+          <span class="fg-label">② 검증 2 (비교·기준 질문 → 답 요약 → 원문 번호 대조 판정)</span>
+          <span class="fg-tag">팩트체크 2</span>
+        </div>
+        <div class="copy-card">
+          <div class="copy-top">
+            <span class="copy-title">복사해서 노트북에 물어볼 질문 2</span>
+            <button class="btn-copy" onclick="copyOne('q2')">질문 복사</button>
+          </div>
+          <pre class="copy-pre" id="q2">내 웹앱에서 사용할 핵심 판단 기준이나 규칙을 자료에서 찾아 표로 정리해 줘.</pre>
+        </div>
+      </div>
+
+      <div class="field-guide" style="border: 1.5px solid var(--blue); background:#F8FAFF;">
+        <div class="fg-top">
+          <span class="fg-label">③ 검증 3 (자료 밖 한계 질문: '이 자료들로 답할 수 없는 질문은?')</span>
+          <span class="fg-tag" style="background:var(--blue); color:#fff;">가장 중요!</span>
+        </div>
+        <p class="fg-desc">AI가 스스로 밝힌 한계 영역을 복사해 워크시트에 적어두세요. 바로 다음 <b>3칸(AI 가드레일)</b>의 재료가 됩니다.</p>
+        <div class="copy-card" style="background:#fff;">
+          <div class="copy-top">
+            <span class="copy-title">복사해서 노트북에 물어볼 질문 3</span>
+            <button class="btn-copy" onclick="copyOne('q3')">질문 복사</button>
+          </div>
+          <pre class="copy-pre" id="q3">이 자료들만으로는 절대 답할 수 없는 질문은 뭐야? 자료에 없는 한계 영역을 목록으로 알려줘.</pre>
+        </div>
+      </div>
+
+      <h4 style="margin:20px 0 8px;">답변 옆 동그라미 숫자를 눌러 원문과 비교한 뒤 판정하기</h4>
       <div class="grid-3">
-        <div class="sub-box" style="background:var(--green-bg); border-color:#CEEAD6;">
-          <h4 style="color:var(--green);">1. 정확 (Pass)</h4>
-          <p style="font-size:0.88rem; margin:0;">왼쪽 원문 하이라이트 문장과 AI 답변의 핵심 사실·수치·기준이 정확히 일치함.</p>
+        <div class="mini-box" style="background:var(--green-bg); border-color:#CEEAD6;">
+          <h4 style="color:var(--green);">정확</h4>
+          <p style="font-size:0.85rem; margin:0;">왼쪽 원문 하이라이트 문장과 AI 답변의 핵심 사실·수치가 정확히 일치함.</p>
         </div>
-        <div class="sub-box" style="background:var(--yellow-bg); border-color:#FDE293;">
-          <h4 style="color:#B06000;">2. 왜곡 (수정 대상)</h4>
-          <p style="font-size:0.88rem; margin:0;">원문에 단어가 있긴 하지만, AI가 예외 조건을 빠뜨리거나 과장하고 두 문장을 잘못 섞어 뜻을 바꿈.</p>
+        <div class="mini-box" style="background:var(--yellow-bg); border-color:#FDE293;">
+          <h4 style="color:#B06000;">왜곡</h4>
+          <p style="font-size:0.85rem; margin:0;">원문에 단어가 있긴 하지만 조건을 빠뜨리거나 과장해서 뜻을 바꿈.</p>
         </div>
-        <div class="sub-box" style="background:var(--red-bg); border-color:#FAD2CF;">
-          <h4 style="color:var(--red);">3. 근거 부족 (환각)</h4>
-          <p style="font-size:0.88rem; margin:0;">번호를 눌러 원문을 봐도 그런 말이 없거나, 자료 밖의 일반 지식을 AI가 마음대로 지어냄.</p>
+        <div class="mini-box" style="background:var(--red-bg); border-color:#FAD2CF;">
+          <h4 style="color:var(--red);">근거 부족</h4>
+          <p style="font-size:0.85rem; margin:0;">번호를 눌러 원문을 봐도 그런 말이 없거나 자료 밖 내용을 지어냄.</p>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- STEP 3 -->
-  <div class="panel" id="step-3">
+  <!-- 3칸 -->
+  <div class="step-panel" id="tab-2">
     <div class="card">
-      <h2 class="card-title"><span class="num-badge">3</span> AI 가드레일 카드 작성: 내 앱의 오류 방지선 긋기 (15분)</h2>
-      <p class="card-sub">방금 4번 질문으로 확인한 '자료의 한계'를 바탕으로, 내 웹앱이 헛소리를 하지 않고 정중히 거절하는 규칙을 만듭니다.</p>
-
-      <div class="instructor-box">
-        <div class="inst-header">강사 진행 대본 (학생 설득 포인트)</div>
-        <div class="inst-ment">
-          "방금 4번 질문에서 AI가 '이건 자료에 없어서 답할 수 없습니다'라고 뽑아준 목록을 보세요. 실제 여러분의 웹앱을 쓰는 사용자들은 꼭 저런 엉뚱한 질문을 합니다. 그때 앱이 거짓말을 지어내지 않고 딱 선을 긋도록 만드는 것이 'AI 가드레일 카드'입니다. 여기서 정한 거절 멘트는 다음 시간 AI Studio 앱의 예외 처리 화면에 그대로 들어갑니다."
-        </div>
+      <div class="card-head">
+        <span class="step-pill">워크시트 3칸</span>
+        <h2>AI 가드레일 카드 채우기 (앱 오류·헛소리 방지선)</h2>
       </div>
+      <p class="card-intro">방금 2칸의 <b>검증 3</b>에서 AI가 "이건 자료에 없어서 못 답해요"라고 뽑아준 목록을 보고, 내 앱의 허용 범위와 거절 멘트를 확정합니다.</p>
 
-      <div class="guard-grid">
-        <div class="g-col g-ok">
-          <h4 style="color:var(--green); margin-top:0;">1. 앱의 전문 영역 (답할 것)</h4>
-          <p style="font-size:0.88rem;">내가 검증한 핵심 자료(PDF) 안에 답이 있는 질문 3가지를 적습니다.</p>
-          <div style="background:#fff; padding:10px; border-radius:8px; font-size:0.84rem;">
-            예: 국문과 전공필수 학점, 복수전공 신청 시기, 교양 필수 이수 영역
+      <div class="guard-visual">
+        <div class="gv-box gv-allow">
+          <h4 style="color:var(--green); margin-top:0;">① 앱의 전문 영역</h4>
+          <p style="font-size:0.86rem;">내가 넣은 자료(PDF)를 근거로 정확히 답해야 하는 핵심 질문 3가지를 적습니다.</p>
+          <div style="background:#fff; padding:10px; border-radius:8px; font-size:0.83rem;">
+            예: 국어국문학과 전공필수 학점 기준, 복수전공 신청 기간 및 절차
           </div>
         </div>
-        <div class="g-col g-mid">
-          <h4 style="color:#B06000; margin-top:0;">3. 거절 시 출력 멘트 (가드레일)</h4>
-          <p style="font-size:0.88rem;">경계를 넘는 질문이 들어오면 추측을 멈추고 아래 문장만 출력합니다.</p>
-          <div style="background:#fff; padding:10px; border-radius:8px; font-size:0.84rem; font-weight:700;">
+        <div class="gv-box gv-wall">
+          <h4 style="color:#B06000; margin-top:0;">③ 거절 시 표준 안내 멘트</h4>
+          <p style="font-size:0.86rem;">범위 밖 질문이 들어오면 추측을 멈추고 화면에 띄울 문장을 확정합니다.</p>
+          <div style="background:#fff; padding:10px; border-radius:8px; font-size:0.83rem; font-weight:700;">
             "죄송합니다. 현재 제공된 전공 안내 자료 범위 밖의 질문입니다. 학과 사무실에 문의해 주세요."
           </div>
         </div>
-        <div class="g-col g-no">
-          <h4 style="color:var(--red); margin-top:0;">2. 앱의 금지 영역 (거절할 것)</h4>
-          <p style="font-size:0.88rem;">자료에 없거나 앱의 목적을 벗어나는 질문 3가지를 적습니다.</p>
-          <div style="background:#fff; padding:10px; border-radius:8px; font-size:0.84rem;">
-            예: 학자금 대출 금리, 공과대학 졸업요건, 개인 성적 상담
+        <div class="gv-box gv-block">
+          <h4 style="color:var(--red); margin-top:0;">② 앱의 금지 영역</h4>
+          <p style="font-size:0.86rem;">자료에 없거나 내 앱의 목적을 벗어나서 거절해야 할 질문 3가지를 적습니다.</p>
+          <div style="background:#fff; padding:10px; border-radius:8px; font-size:0.83rem;">
+            예: 등록금 대출 이자율 계산, 타 단과대학(공대) 졸업요건
           </div>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- STEP 4 -->
-  <div class="panel" id="step-4">
+  <!-- 4칸 -->
+  <div class="step-panel" id="tab-3">
     <div class="card">
-      <h2 class="card-title"><span class="num-badge">4</span> Gemini Skill 조련 & 5회차 연결 제출 (30분)</h2>
-      <p class="card-sub">지금까지 검증한 기준과 가드레일을 합쳐 나만의 Gemini Skill을 만들고, 실제 앱처럼 작동하는지 테스트합니다.</p>
+      <div class="card-head">
+        <span class="step-pill">워크시트 4칸</span>
+        <h2>Gemini Skill 좋은 지시문 5요소 & 길들이기 테스트</h2>
+      </div>
+      <p class="card-intro">지금까지 검증한 자료와 거절 규칙을 합쳐 나만의 Gemini Skill을 생성하고, 실제 앱처럼 작동하는지 시험합니다.</p>
 
-      <div class="instructor-box">
-        <div class="inst-header">강사 진행 대본 & 5회차 연결 설명</div>
-        <div class="inst-ment">
-          "Gemini 앱의 Skill은 다음 시간에 만들 웹앱의 '리허설 모델'입니다. 화면 디자인을 입히기 전에, 오늘 조립한 5요소 지시문과 핵심 PDF를 Skill에 넣고 @내스킬을 불러서 테스트해 보세요. 정상 질문에는 표로 깔끔하게 답하고, 엉뚱한 질문에는 우리가 정한 거절 멘트를 뱉어내면 합격입니다! 마지막으로 워크시트 하단 '구글 문서로 내보내기'를 눌러 인장 사이트에 제출해 주세요."
+      <div class="field-guide">
+        <div class="fg-top">
+          <span class="fg-label">1단계: 워크시트 4칸의 빈칸 5개 채우기</span>
+          <span class="fg-tag">지시문 조립</span>
         </div>
-        <p class="inst-tip">• <b>제출 주의사항:</b> 워크시트 구글 문서 링크('링크가 있는 모든 사용자 뷰어')만 인장 사이트에 제출하며, 유료 논문이 들어 있는 Gemini Notebook 자체는 외부 공유하지 않도록 안내합니다.</p>
+        <ul style="margin:0; padding-left:20px; font-size:0.9rem; color:var(--dark);">
+          <li><b>나만의 Skill 호출 이름:</b> <code>@인문대_학사조교</code> 형태로 부르기 쉽게 짓습니다.</li>
+          <li><b>1. 역할:</b> 누구에게 어떤 톤으로 답하는 전문가인지 적습니다.</li>
+          <li><b>2. 판단 기준:</b> 반드시 업로드한 핵심 PDF의 기준표만 근거로 삼도록 명시합니다.</li>
+          <li><b>3. 하지 말 것:</b> 자료에 없는 내용 추측 금지, 개인정보 요구 금지 규칙을 적습니다.</li>
+          <li><b>4. 모를 때 할 말:</b> 3칸에서 만든 '거절 시 표준 안내 멘트'를 그대로 연결합니다.</li>
+          <li><b>5. 답 모양:</b> 웹앱 화면에 출력될 깔끔한 형식(예: <code>[핵심 요약 1줄] → [세부 기준 표] → [주의사항 2가지]</code>)을 지정합니다.</li>
+        </ul>
       </div>
 
-      <div class="action-list">
-        <div class="action-item">
-          <span class="a-num">1단계</span>
-          <div class="a-body">
-            <h4>워크시트 STEP 4에서 좋은 지시문 5요소 자동 조립</h4>
-            <p><b>① 역할</b> · <b>② 판단 기준(핵심 자료)</b> · <b>③ 하지 말 것</b> · <b>④ 모를 때 할 말(가드레일 자동 연동)</b> · <b>⑤ 답 모양(출력 형식)</b>을 채우고 [지시문 복사하기]를 누릅니다.</p>
+      <div class="field-guide">
+        <div class="fg-top">
+          <span class="fg-label">2단계: Gemini에서 Skill 생성 후 2가지 테스트 실행</span>
+          <span class="fg-tag">길들이기 결과 기록</span>
+        </div>
+        <p class="fg-desc">자동 조립된 지시문을 복사해 Gemini에서 새 Skill을 만들고 핵심 PDF를 첨부해 저장하세요. 채팅창에서 <code>@내스킬이름</code>을 부른 뒤 아래 2가지를 시험하고 결과를 맨 아래 칸에 적습니다.</p>
+        <div class="grid-2">
+          <div class="mini-box" style="background:var(--green-bg); border-color:#CEEAD6;">
+            <h4 style="color:var(--green);">정상 질문 테스트 (1건)</h4>
+            <p style="font-size:0.86rem; margin:0;">3칸에 적은 '전문 영역' 질문을 던졌을 때, 내가 정한 <b>답 모양(표 등)</b>대로 정확히 답하는지 확인합니다.</p>
+          </div>
+          <div class="mini-box" style="background:var(--red-bg); border-color:#FAD2CF;">
+            <h4 style="color:var(--red);">가드레일 거절 테스트 (1건)</h4>
+            <p style="font-size:0.86rem; margin:0;">3칸에 적은 '금지 영역' 질문을 던졌을 때, 지어내지 않고 <b>거절 멘트</b>를 그대로 출력하는지 확인합니다.</p>
           </div>
         </div>
-        <div class="action-item">
-          <span class="a-num">2단계</span>
-          <div class="a-body">
-            <h4>Gemini Skill 생성 및 길들이기 테스트 (2가지 필수)</h4>
-            <p>Gemini에서 새 Skill을 만들고 지시문 붙여넣기 + 핵심 자료 업로드 후 채팅창에 <code>@내스킬이름</code>을 호출합니다.<br/>
-            • <b>테스트 1 (정상 질문):</b> 전문 영역 질문을 던져 지정한 '답 모양'대로 정확히 나오는지 확인.<br/>
-            • <b>테스트 2 (가드레일 질문):</b> 금지 영역 질문을 던져 추측하지 않고 '거절 멘트'를 출력하는지 확인.</p>
-          </div>
-        </div>
-        <div class="action-item">
-          <span class="a-num">3단계</span>
-          <div class="a-body">
-            <h4>구글 문서 내보내기 & 인장 사이트 4회차 제출</h4>
-            <p>워크시트 맨 아래 초록색 <b>[구글 문서로 내보내기 (docs.new)]</b> 버튼 클릭 → 열린 새 문서에 붙여넣기(Ctrl+V) → 우측 상단 공유 → '링크가 있는 모든 사용자(뷰어)' 복사 후 인장 사이트 제출.</p>
-          </div>
-        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 마무리 -->
+  <div class="step-panel" id="tab-4">
+    <div class="card">
+      <div class="card-head">
+        <span class="step-pill" style="background:var(--green);">마무리 제출</span>
+        <h2>구글 문서로 내보내 인장 사이트 제출하기 (10분)</h2>
+      </div>
+      <p class="card-intro">오늘 작성한 워크시트 내용을 구글 문서로 변환해 공유 링크를 제출하면 출석과 4회차 과제가 인정됩니다.</p>
+
+      <div class="field-guide">
+        <div class="fg-label" style="margin-bottom:8px;">제출 4단계 순서</div>
+        <ol style="margin:0; padding-left:20px; font-size:0.93rem; line-height:1.8;">
+          <li>워크시트 웹앱 맨 아래 초록색 <b>[구글 문서로 내보내기 (docs.new)]</b> 버튼을 누릅니다.</li>
+          <li>새로 열리는 빈 구글 문서 화면에서 붙여넣기(<code>Ctrl+V</code> 또는 <code>Cmd+V</code>)를 누르면 표가 예쁘게 들어갑니다.</li>
+          <li>우측 상단 파란색 <b>[공유]</b> 버튼 클릭 → 일반 액세스를 <b>'링크가 있는 모든 사용자(뷰어)'</b>로 바꾼 뒤 <b>'링크 복사'</b>를 누릅니다.</li>
+          <li>학교 <b>인장 사이트 4회차 제출 칸</b>에 복사한 링크를 붙여넣으면 완료! (주의: 유료 논문이 들어 있는 Gemini Notebook 자체는 외부에 공유하지 마세요.)</li>
+        </ol>
       </div>
     </div>
   </div>
@@ -466,30 +505,39 @@
 <div class="toast" id="toast">클립보드에 복사되었습니다!</div>
 
 <script>
-  function toggleInstructor() {
-    const checked = document.getElementById('instToggle').checked;
-    if (checked) document.body.classList.add('show-instructor');
-    else document.body.classList.remove('show-instructor');
-  }
-
-  function openStep(idx, btn) {
-    document.querySelectorAll('.s-btn').forEach(b => b.classList.remove('active'));
-    document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  function showTab(idx, btn) {
+    document.querySelectorAll('.t-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.step-panel').forEach(p => p.classList.remove('active'));
     btn.classList.add('active');
-    document.getElementById('step-' + idx).classList.add('active');
+    document.getElementById('tab-' + idx).classList.add('active');
   }
 
-  function toggleCheck(el) {
+  function setMode(type) {
+    const b1 = document.getElementById('mBtn1');
+    const b2 = document.getElementById('mBtn2');
+    const desc = document.getElementById('modeDesc');
+    if (type === 1) {
+      b1.classList.add('active');
+      b2.classList.remove('active');
+      desc.innerHTML = '<b>AI 생성·분석형:</b> 사용자 질문에 AI가 자료를 보고 실시간으로 대답해 주는 앱입니다. (예: 전공 튜터, 사투리 변환기) → 오늘 만드는 Skill이 내 앱의 실제 두뇌가 됩니다.';
+    } else {
+      b2.classList.add('active');
+      b1.classList.remove('active');
+      desc.innerHTML = '<b>데이터 기록·아카이브형:</b> AI 대답 없이 검증된 정보를 정리해 보여주는 앱입니다. (예: 독립서점 아카이브, 작품 추천 기록장) → 오늘 만드는 Skill은 다음 주에 내 앱 코드를 대신 짜주는 <b>전담 기획·개발 조교</b>로 활용합니다.';
+    }
+  }
+
+  function toggleChk(el) {
     const cb = el.querySelector('input');
     setTimeout(() => {
-      if (cb.checked) el.classList.add('checked');
-      else el.classList.remove('checked');
+      if (cb.checked) el.classList.add('done');
+      else el.classList.remove('done');
     }, 10);
   }
 
-  function copyText(id) {
-    const text = document.getElementById(id).textContent;
-    navigator.clipboard.writeText(text).then(() => {
+  function copyOne(id) {
+    const txt = document.getElementById(id).textContent;
+    navigator.clipboard.writeText(txt).then(() => {
       const t = document.getElementById('toast');
       t.classList.add('show');
       setTimeout(() => t.classList.remove('show'), 2200);
